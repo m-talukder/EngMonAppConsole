@@ -1,0 +1,54 @@
+﻿/**
+ * GRIDVIEW STYLES
+ **/
+.gridview {
+        font-family:"calibri";
+        background-color:transparent;
+        width: 100%;
+        font-size: small;
+        text-align: left;
+        
+}
+.gridview th {
+    background: #ff5aa2;
+    background: rgba(109, 164, 239, 0.6);
+        padding: 5px;
+        font-size:small;
+    border: 1px solid #778899;
+}
+
+.gridview th a{
+        color: #003300;
+        text-decoration: none;
+}
+.gridview header {
+    font: normal medium "calibri";
+    background: transparent;
+
+}
+.gridview th a:hover{
+        color: #003300;
+        text-decoration: underline;
+}
+.gridview td  {
+    
+   border:1px solid #778899;
+        background: transparent;
+        color: #333333;
+        font: small "calibri";
+        padding: 3px;
+}
+.gridview tr.even td {
+        background: #FFFFFF;
+}
+.gridview td a{
+        color: #003300;
+        font: normal small "calibri";
+        padding: 2px;
+        text-decoration: none;
+}
+.gridview td a:hover {
+        color: red;
+        font-weight: bold;
+        text-decoration:underline;     
+}

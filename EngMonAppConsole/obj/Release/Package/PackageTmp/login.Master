@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="login.master.cs" Inherits="EngMonAppConsole.login" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head id="Head1" runat="server">
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title> Engine Monitoring Console</title>
+
+    <webopt:BundleReference ID="BundleReference1" runat="server" Path="~/Content/css" />
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+    <style type="text/css">
+        .auto-style1
+        {
+            color: #83AA0F;
+        }
+    </style>
+</head>
+<body>
+    <form id="Form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+         
+        </asp:ScriptManager>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">
+                        <a href="~/" class="auto-style1">Engine </a><span class="auto-style1">Monitoring Console</span>
+                    </p>
+                </div>
+              
+            </div>
+        </header>
+        <div id="body">
+            <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; <%--Framework Scripts--%>Mohammmed Talukder, version 1.0</p>
+                </div>
+            </div>
+        </footer>
+    </form>
+</body>
+    </html>

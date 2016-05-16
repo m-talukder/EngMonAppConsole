@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ReposModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ReposModelStoreContainer">
+          <EntitySet Name="ConsoleUser" EntityType="ReposModel.Store.ConsoleUser" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DataLocation" EntityType="ReposModel.Store.DataLocation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Host" EntityType="ReposModel.Store.Host" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Job" EntityType="ReposModel.Store.Job" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="JobRun" EntityType="ReposModel.Store.JobRun" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="JobRunDataLocation" EntityType="ReposModel.Store.JobRunDataLocation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="JobRunStatus" EntityType="ReposModel.Store.JobRunStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LoginRecord" EntityType="ReposModel.Store.LoginRecord" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Project" EntityType="ReposModel.Store.Project" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Job_Project" Association="ReposModel.Store.FK_Job_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRun_Job" Association="ReposModel.Store.FK_JobRun_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobRun" EntitySet="JobRun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRunDataLocation_DataLocation" Association="ReposModel.Store.FK_JobRunDataLocation_DataLocation">
+            <End Role="DataLocation" EntitySet="DataLocation" />
+            <End Role="JobRunDataLocation" EntitySet="JobRunDataLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRunDataLocation_JobRun" Association="ReposModel.Store.FK_JobRunDataLocation_JobRun">
+            <End Role="JobRun" EntitySet="JobRun" />
+            <End Role="JobRunDataLocation" EntitySet="JobRunDataLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginRecord_ConsoleUser" Association="ReposModel.Store.FK_LoginRecord_ConsoleUser">
+            <End Role="ConsoleUser" EntitySet="ConsoleUser" />
+            <End Role="LoginRecord" EntitySet="LoginRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Host" Association="ReposModel.Store.FK_Project_Host">
+            <End Role="Host" EntitySet="Host" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ConsoleUser">
+          <Key>
+            <PropertyRef Name="uID" />
+          </Key>
+          <Property Name="uID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="UserPassword" Type="varchar" Nullable="false" MaxLength="14" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="TimeRegistration" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="DataLocation">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DataStoreName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Host">
+          <Key>
+            <PropertyRef Name="HostID" />
+          </Key>
+          <Property Name="HostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="HostName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PhysicalAddress" Type="varchar" MaxLength="50" />
+          <Property Name="OS" Type="varchar" MaxLength="50" />
+          <Property Name="Memory" Type="int" />
+          <Property Name="FreeMemory" Type="int" />
+          <Property Name="LastMonActivity" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="fk_ProjectID" Type="bigint" Nullable="false" />
+          <Property Name="JobName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="LocalPath" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="JobRun">
+          <Key>
+            <PropertyRef Name="JobRunID" />
+          </Key>
+          <Property Name="JobRunID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="fk_JobID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="RunStartTime" Type="datetime" />
+          <Property Name="RunEndTime" Type="datetime" />
+          <Property Name="RunDuration" Type="float" />
+          <Property Name="fk_RunStatus" Type="int" />
+          <Property Name="RowsIn" Type="bigint" />
+          <Property Name="RowsOut" Type="bigint" />
+          <Property Name="ErrorMessage" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="JobRunDataLocation">
+          <Key>
+            <PropertyRef Name="JobRunDataStoreID" />
+          </Key>
+          <Property Name="JobRunDataStoreID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="JobRunID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DataLocatorID" Type="int" Nullable="false" />
+          <Property Name="isSource" Type="int" Nullable="false" />
+          <Property Name="isTarget" Type="int" Nullable="false" />
+          <Property Name="updateTime" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="JobRunStatus">
+          <Key>
+            <PropertyRef Name="JobRunStatusID" />
+          </Key>
+          <Property Name="JobRunStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StatusDescription" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="LoginRecord">
+          <Key>
+            <PropertyRef Name="LoginRecordID" />
+          </Key>
+          <Property Name="LoginRecordID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fk_CosoleUserID" Type="int" />
+          <Property Name="acessTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fk_HostID" Type="int" />
+          <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ProjectPath" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Job_Project">
+          <End Role="Project" Type="ReposModel.Store.Project" Multiplicity="1" />
+          <End Role="Job" Type="ReposModel.Store.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="fk_ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRun_Job">
+          <End Role="Job" Type="ReposModel.Store.Job" Multiplicity="1" />
+          <End Role="JobRun" Type="ReposModel.Store.JobRun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="JobRun">
+              <PropertyRef Name="fk_JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRunDataLocation_DataLocation">
+          <End Role="DataLocation" Type="ReposModel.Store.DataLocation" Multiplicity="1" />
+          <End Role="JobRunDataLocation" Type="ReposModel.Store.JobRunDataLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataLocation">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="JobRunDataLocation">
+              <PropertyRef Name="DataLocatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRunDataLocation_JobRun">
+          <End Role="JobRun" Type="ReposModel.Store.JobRun" Multiplicity="1" />
+          <End Role="JobRunDataLocation" Type="ReposModel.Store.JobRunDataLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobRun">
+              <PropertyRef Name="JobRunID" />
+            </Principal>
+            <Dependent Role="JobRunDataLocation">
+              <PropertyRef Name="JobRunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginRecord_ConsoleUser">
+          <End Role="ConsoleUser" Type="ReposModel.Store.ConsoleUser" Multiplicity="0..1" />
+          <End Role="LoginRecord" Type="ReposModel.Store.LoginRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConsoleUser">
+              <PropertyRef Name="uID" />
+            </Principal>
+            <Dependent Role="LoginRecord">
+              <PropertyRef Name="fk_CosoleUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Host">
+          <End Role="Host" Type="ReposModel.Store.Host" Multiplicity="0..1" />
+          <End Role="Project" Type="ReposModel.Store.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Host">
+              <PropertyRef Name="HostID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="fk_HostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReposModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="ReposEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ConsoleUsers" EntityType="ReposModel.ConsoleUser" />
+          <EntitySet Name="DataLocations" EntityType="ReposModel.DataLocation" />
+          <EntitySet Name="Hosts" EntityType="ReposModel.Host" />
+          <EntitySet Name="Jobs" EntityType="ReposModel.Job" />
+          <EntitySet Name="JobRuns" EntityType="ReposModel.JobRun" />
+          <EntitySet Name="JobRunDataLocations" EntityType="ReposModel.JobRunDataLocation" />
+          <EntitySet Name="JobRunStatus" EntityType="ReposModel.JobRunStatu" />
+          <EntitySet Name="LoginRecords" EntityType="ReposModel.LoginRecord" />
+          <EntitySet Name="Projects" EntityType="ReposModel.Project" />
+          <AssociationSet Name="FK_LoginRecord_ConsoleUser" Association="ReposModel.FK_LoginRecord_ConsoleUser">
+            <End Role="ConsoleUser" EntitySet="ConsoleUsers" />
+            <End Role="LoginRecord" EntitySet="LoginRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRunDataLocation_DataLocation" Association="ReposModel.FK_JobRunDataLocation_DataLocation">
+            <End Role="DataLocation" EntitySet="DataLocations" />
+            <End Role="JobRunDataLocation" EntitySet="JobRunDataLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Host" Association="ReposModel.FK_Project_Host">
+            <End Role="Host" EntitySet="Hosts" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Project" Association="ReposModel.FK_Job_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRun_Job" Association="ReposModel.FK_JobRun_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="JobRun" EntitySet="JobRuns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobRunDataLocation_JobRun" Association="ReposModel.FK_JobRunDataLocation_JobRun">
+            <End Role="JobRun" EntitySet="JobRuns" />
+            <End Role="JobRunDataLocation" EntitySet="JobRunDataLocations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ConsoleUser">
+          <Key>
+            <PropertyRef Name="uID" />
+          </Key>
+          <Property Name="uID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="UserPassword" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="TimeRegistration" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="LoginRecords" Relationship="ReposModel.FK_LoginRecord_ConsoleUser" FromRole="ConsoleUser" ToRole="LoginRecord" />
+        </EntityType>
+        <EntityType Name="DataLocation">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataStoreName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="JobRunDataLocations" Relationship="ReposModel.FK_JobRunDataLocation_DataLocation" FromRole="DataLocation" ToRole="JobRunDataLocation" />
+        </EntityType>
+        <EntityType Name="Host">
+          <Key>
+            <PropertyRef Name="HostID" />
+          </Key>
+          <Property Name="HostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HostName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PhysicalAddress" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="OS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Memory" Type="Int32" />
+          <Property Name="FreeMemory" Type="Int32" />
+          <Property Name="LastMonActivity" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Projects" Relationship="ReposModel.FK_Project_Host" FromRole="Host" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="fk_ProjectID" Type="Int64" Nullable="false" />
+          <Property Name="JobName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="LocalPath" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Project" Relationship="ReposModel.FK_Job_Project" FromRole="Job" ToRole="Project" />
+          <NavigationProperty Name="JobRuns" Relationship="ReposModel.FK_JobRun_Job" FromRole="Job" ToRole="JobRun" />
+        </EntityType>
+        <EntityType Name="JobRun">
+          <Key>
+            <PropertyRef Name="JobRunID" />
+          </Key>
+          <Property Name="JobRunID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="fk_JobID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="RunStartTime" Type="DateTime" Precision="3" />
+          <Property Name="RunEndTime" Type="DateTime" Precision="3" />
+          <Property Name="RunDuration" Type="Double" />
+          <Property Name="fk_RunStatus" Type="Int32" />
+          <Property Name="RowsIn" Type="Int64" />
+          <Property Name="RowsOut" Type="Int64" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Job" Relationship="ReposModel.FK_JobRun_Job" FromRole="JobRun" ToRole="Job" />
+          <NavigationProperty Name="JobRunDataLocations" Relationship="ReposModel.FK_JobRunDataLocation_JobRun" FromRole="JobRun" ToRole="JobRunDataLocation" />
+        </EntityType>
+        <EntityType Name="JobRunDataLocation">
+          <Key>
+            <PropertyRef Name="JobRunDataStoreID" />
+          </Key>
+          <Property Name="JobRunDataStoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobRunID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DataLocatorID" Type="Int32" Nullable="false" />
+          <Property Name="isSource" Type="Int32" Nullable="false" />
+          <Property Name="isTarget" Type="Int32" Nullable="false" />
+          <Property Name="updateTime" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="DataLocation" Relationship="ReposModel.FK_JobRunDataLocation_DataLocation" FromRole="JobRunDataLocation" ToRole="DataLocation" />
+          <NavigationProperty Name="JobRun" Relationship="ReposModel.FK_JobRunDataLocation_JobRun" FromRole="JobRunDataLocation" ToRole="JobRun" />
+        </EntityType>
+        <EntityType Name="JobRunStatu">
+          <Key>
+            <PropertyRef Name="JobRunStatusID" />
+          </Key>
+          <Property Name="JobRunStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusDescription" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="LoginRecord">
+          <Key>
+            <PropertyRef Name="LoginRecordID" />
+          </Key>
+          <Property Name="LoginRecordID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_CosoleUserID" Type="Int32" />
+          <Property Name="acessTime" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="ConsoleUser" Relationship="ReposModel.FK_LoginRecord_ConsoleUser" FromRole="LoginRecord" ToRole="ConsoleUser" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_HostID" Type="Int32" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ProjectPath" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Host" Relationship="ReposModel.FK_Project_Host" FromRole="Project" ToRole="Host" />
+          <NavigationProperty Name="Jobs" Relationship="ReposModel.FK_Job_Project" FromRole="Project" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_LoginRecord_ConsoleUser">
+          <End Role="ConsoleUser" Type="ReposModel.ConsoleUser" Multiplicity="0..1" />
+          <End Role="LoginRecord" Type="ReposModel.LoginRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConsoleUser">
+              <PropertyRef Name="uID" />
+            </Principal>
+            <Dependent Role="LoginRecord">
+              <PropertyRef Name="fk_CosoleUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRunDataLocation_DataLocation">
+          <End Role="DataLocation" Type="ReposModel.DataLocation" Multiplicity="1" />
+          <End Role="JobRunDataLocation" Type="ReposModel.JobRunDataLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataLocation">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="JobRunDataLocation">
+              <PropertyRef Name="DataLocatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Host">
+          <End Role="Host" Type="ReposModel.Host" Multiplicity="0..1" />
+          <End Role="Project" Type="ReposModel.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Host">
+              <PropertyRef Name="HostID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="fk_HostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Project">
+          <End Role="Project" Type="ReposModel.Project" Multiplicity="1" />
+          <End Role="Job" Type="ReposModel.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="fk_ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRun_Job">
+          <End Role="Job" Type="ReposModel.Job" Multiplicity="1" />
+          <End Role="JobRun" Type="ReposModel.JobRun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="JobRun">
+              <PropertyRef Name="fk_JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobRunDataLocation_JobRun">
+          <End Role="JobRun" Type="ReposModel.JobRun" Multiplicity="1" />
+          <End Role="JobRunDataLocation" Type="ReposModel.JobRunDataLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobRun">
+              <PropertyRef Name="JobRunID" />
+            </Principal>
+            <Dependent Role="JobRunDataLocation">
+              <PropertyRef Name="JobRunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ReposModelStoreContainer" CdmEntityContainer="ReposEntities">
+          <EntitySetMapping Name="ConsoleUsers">
+            <EntityTypeMapping TypeName="ReposModel.ConsoleUser">
+              <MappingFragment StoreEntitySet="ConsoleUser">
+                <ScalarProperty Name="uID" ColumnName="uID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TimeRegistration" ColumnName="TimeRegistration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataLocations">
+            <EntityTypeMapping TypeName="ReposModel.DataLocation">
+              <MappingFragment StoreEntitySet="DataLocation">
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="DataStoreName" ColumnName="DataStoreName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hosts">
+            <EntityTypeMapping TypeName="ReposModel.Host">
+              <MappingFragment StoreEntitySet="Host">
+                <ScalarProperty Name="HostID" ColumnName="HostID" />
+                <ScalarProperty Name="HostName" ColumnName="HostName" />
+                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
+                <ScalarProperty Name="OS" ColumnName="OS" />
+                <ScalarProperty Name="Memory" ColumnName="Memory" />
+                <ScalarProperty Name="FreeMemory" ColumnName="FreeMemory" />
+                <ScalarProperty Name="LastMonActivity" ColumnName="LastMonActivity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="ReposModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="fk_ProjectID" ColumnName="fk_ProjectID" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+                <ScalarProperty Name="LocalPath" ColumnName="LocalPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobRuns">
+            <EntityTypeMapping TypeName="ReposModel.JobRun">
+              <MappingFragment StoreEntitySet="JobRun">
+                <ScalarProperty Name="JobRunID" ColumnName="JobRunID" />
+                <ScalarProperty Name="fk_JobID" ColumnName="fk_JobID" />
+                <ScalarProperty Name="RunStartTime" ColumnName="RunStartTime" />
+                <ScalarProperty Name="RunEndTime" ColumnName="RunEndTime" />
+                <ScalarProperty Name="RunDuration" ColumnName="RunDuration" />
+                <ScalarProperty Name="fk_RunStatus" ColumnName="fk_RunStatus" />
+                <ScalarProperty Name="RowsIn" ColumnName="RowsIn" />
+                <ScalarProperty Name="RowsOut" ColumnName="RowsOut" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobRunDataLocations">
+            <EntityTypeMapping TypeName="ReposModel.JobRunDataLocation">
+              <MappingFragment StoreEntitySet="JobRunDataLocation">
+                <ScalarProperty Name="JobRunDataStoreID" ColumnName="JobRunDataStoreID" />
+                <ScalarProperty Name="JobRunID" ColumnName="JobRunID" />
+                <ScalarProperty Name="DataLocatorID" ColumnName="DataLocatorID" />
+                <ScalarProperty Name="isSource" ColumnName="isSource" />
+                <ScalarProperty Name="isTarget" ColumnName="isTarget" />
+                <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobRunStatus">
+            <EntityTypeMapping TypeName="ReposModel.JobRunStatu">
+              <MappingFragment StoreEntitySet="JobRunStatus">
+                <ScalarProperty Name="JobRunStatusID" ColumnName="JobRunStatusID" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginRecords">
+            <EntityTypeMapping TypeName="ReposModel.LoginRecord">
+              <MappingFragment StoreEntitySet="LoginRecord">
+                <ScalarProperty Name="LoginRecordID" ColumnName="LoginRecordID" />
+                <ScalarProperty Name="fk_CosoleUserID" ColumnName="fk_CosoleUserID" />
+                <ScalarProperty Name="acessTime" ColumnName="acessTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="ReposModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="fk_HostID" ColumnName="fk_HostID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectPath" ColumnName="ProjectPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

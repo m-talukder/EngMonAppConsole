@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EngMonAppReposModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="EngMonAppReposEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ConsoleUsers" EntityType="EngMonAppReposModel.ConsoleUser" />
+    <EntitySet Name="DataLocations" EntityType="EngMonAppReposModel.DataLocation" />
+    <EntitySet Name="Hosts" EntityType="EngMonAppReposModel.Host" />
+    <EntitySet Name="Jobs" EntityType="EngMonAppReposModel.Job" />
+    <EntitySet Name="JobRuns" EntityType="EngMonAppReposModel.JobRun" />
+    <EntitySet Name="JobRunDataLocations" EntityType="EngMonAppReposModel.JobRunDataLocation" />
+    <EntitySet Name="JobRunStatus" EntityType="EngMonAppReposModel.JobRunStatu" />
+    <EntitySet Name="LoginRecords" EntityType="EngMonAppReposModel.LoginRecord" />
+    <EntitySet Name="Projects" EntityType="EngMonAppReposModel.Project" />
+    <EntitySet Name="sysdiagrams" EntityType="EngMonAppReposModel.sysdiagram" />
+    <AssociationSet Name="FK_LoginRecord_ConsoleUser" Association="EngMonAppReposModel.FK_LoginRecord_ConsoleUser">
+      <End Role="ConsoleUser" EntitySet="ConsoleUsers" />
+      <End Role="LoginRecord" EntitySet="LoginRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobRunDataLocation_DataLocation" Association="EngMonAppReposModel.FK_JobRunDataLocation_DataLocation">
+      <End Role="DataLocation" EntitySet="DataLocations" />
+      <End Role="JobRunDataLocation" EntitySet="JobRunDataLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Host" Association="EngMonAppReposModel.FK_Project_Host">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Job_Project" Association="EngMonAppReposModel.FK_Job_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Job" EntitySet="Jobs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobRun_Job" Association="EngMonAppReposModel.FK_JobRun_Job">
+      <End Role="Job" EntitySet="Jobs" />
+      <End Role="JobRun" EntitySet="JobRuns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobRunDataLocation_JobRun" Association="EngMonAppReposModel.FK_JobRunDataLocation_JobRun">
+      <End Role="JobRun" EntitySet="JobRuns" />
+      <End Role="JobRunDataLocation" EntitySet="JobRunDataLocations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ConsoleUser">
+    <Key>
+      <PropertyRef Name="uID" />
+    </Key>
+    <Property Name="uID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="UserPassword" Type="String" Nullable="false" MaxLength="14" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="TimeRegistration" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="LoginRecords" Relationship="EngMonAppReposModel.FK_LoginRecord_ConsoleUser" FromRole="ConsoleUser" ToRole="LoginRecord" />
+  </EntityType>
+  <EntityType Name="DataLocation">
+    <Key>
+      <PropertyRef Name="locationID" />
+    </Key>
+    <Property Name="locationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DataStoreName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="JobRunDataLocations" Relationship="EngMonAppReposModel.FK_JobRunDataLocation_DataLocation" FromRole="DataLocation" ToRole="JobRunDataLocation" />
+  </EntityType>
+  <EntityType Name="Host">
+    <Key>
+      <PropertyRef Name="HostID" />
+    </Key>
+    <Property Name="HostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HostName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PhysicalAddress" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="OS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Memory" Type="Int32" />
+    <Property Name="FreeMemory" Type="Int32" />
+    <Property Name="LastMonActivity" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Projects" Relationship="EngMonAppReposModel.FK_Project_Host" FromRole="Host" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="JobID" />
+    </Key>
+    <Property Name="JobID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="fk_ProjectID" Type="Int64" Nullable="false" />
+    <Property Name="JobName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LocalPath" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Project" Relationship="EngMonAppReposModel.FK_Job_Project" FromRole="Job" ToRole="Project" />
+    <NavigationProperty Name="JobRuns" Relationship="EngMonAppReposModel.FK_JobRun_Job" FromRole="Job" ToRole="JobRun" />
+  </EntityType>
+  <EntityType Name="JobRun">
+    <Key>
+      <PropertyRef Name="JobRunID" />
+    </Key>
+    <Property Name="JobRunID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="fk_JobID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="RunStartTime" Type="DateTime" Precision="3" />
+    <Property Name="RunEndTime" Type="DateTime" Precision="3" />
+    <Property Name="RunDuration" Type="Double" />
+    <Property Name="fk_RunStatus" Type="Int32" />
+    <Property Name="RowsIn" Type="Int64" />
+    <Property Name="RowsOut" Type="Int64" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Job" Relationship="EngMonAppReposModel.FK_JobRun_Job" FromRole="JobRun" ToRole="Job" />
+    <NavigationProperty Name="JobRunDataLocations" Relationship="EngMonAppReposModel.FK_JobRunDataLocation_JobRun" FromRole="JobRun" ToRole="JobRunDataLocation" />
+  </EntityType>
+  <EntityType Name="JobRunDataLocation">
+    <Key>
+      <PropertyRef Name="JobRunDataStoreID" />
+    </Key>
+    <Property Name="JobRunDataStoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobRunID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DataLocatorID" Type="Int32" Nullable="false" />
+    <Property Name="isSource" Type="Int32" Nullable="false" />
+    <Property Name="isTarget" Type="Int32" Nullable="false" />
+    <Property Name="updateTime" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="DataLocation" Relationship="EngMonAppReposModel.FK_JobRunDataLocation_DataLocation" FromRole="JobRunDataLocation" ToRole="DataLocation" />
+    <NavigationProperty Name="JobRun" Relationship="EngMonAppReposModel.FK_JobRunDataLocation_JobRun" FromRole="JobRunDataLocation" ToRole="JobRun" />
+  </EntityType>
+  <EntityType Name="JobRunStatu">
+    <Key>
+      <PropertyRef Name="JobRunStatusID" />
+    </Key>
+    <Property Name="JobRunStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusDescription" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="LoginRecord">
+    <Key>
+      <PropertyRef Name="LoginRecordID" />
+    </Key>
+    <Property Name="LoginRecordID" Type="Int64" Nullable="false" />
+    <Property Name="fk_CosoleUserID" Type="Int32" />
+    <Property Name="acessTime" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ConsoleUser" Relationship="EngMonAppReposModel.FK_LoginRecord_ConsoleUser" FromRole="LoginRecord" ToRole="ConsoleUser" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fk_HostID" Type="Int32" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectPath" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Host" Relationship="EngMonAppReposModel.FK_Project_Host" FromRole="Project" ToRole="Host" />
+    <NavigationProperty Name="Jobs" Relationship="EngMonAppReposModel.FK_Job_Project" FromRole="Project" ToRole="Job" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="name" />
+      <PropertyRef Name="principal_id" />
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_LoginRecord_ConsoleUser">
+    <End Role="ConsoleUser" Type="EngMonAppReposModel.ConsoleUser" Multiplicity="0..1" />
+    <End Role="LoginRecord" Type="EngMonAppReposModel.LoginRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConsoleUser">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="LoginRecord">
+        <PropertyRef Name="fk_CosoleUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobRunDataLocation_DataLocation">
+    <End Role="DataLocation" Type="EngMonAppReposModel.DataLocation" Multiplicity="1" />
+    <End Role="JobRunDataLocation" Type="EngMonAppReposModel.JobRunDataLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DataLocation">
+        <PropertyRef Name="locationID" />
+      </Principal>
+      <Dependent Role="JobRunDataLocation">
+        <PropertyRef Name="DataLocatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Host">
+    <End Role="Host" Type="EngMonAppReposModel.Host" Multiplicity="0..1" />
+    <End Role="Project" Type="EngMonAppReposModel.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="HostID" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="fk_HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Job_Project">
+    <End Role="Project" Type="EngMonAppReposModel.Project" Multiplicity="1" />
+    <End Role="Job" Type="EngMonAppReposModel.Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="fk_ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobRun_Job">
+    <End Role="Job" Type="EngMonAppReposModel.Job" Multiplicity="1" />
+    <End Role="JobRun" Type="EngMonAppReposModel.JobRun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="JobID" />
+      </Principal>
+      <Dependent Role="JobRun">
+        <PropertyRef Name="fk_JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobRunDataLocation_JobRun">
+    <End Role="JobRun" Type="EngMonAppReposModel.JobRun" Multiplicity="1" />
+    <End Role="JobRunDataLocation" Type="EngMonAppReposModel.JobRunDataLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobRun">
+        <PropertyRef Name="JobRunID" />
+      </Principal>
+      <Dependent Role="JobRunDataLocation">
+        <PropertyRef Name="JobRunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

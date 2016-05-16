@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d6f37ce8d5c47a7829e48cd8dfbbdb8" Name="Diagram1">
+        <EntityTypeShape EntityType="ReposModel.ConsoleUser" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.DataLocation" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.Host" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.Job" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.JobRun" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.JobRunDataLocation" Width="1.5" PointX="9.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.JobRunStatu" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.LoginRecord" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReposModel.Project" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="ReposModel.FK_LoginRecord_ConsoleUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ReposModel.FK_JobRunDataLocation_DataLocation" ManuallyRouted="false" />
+        <AssociationConnector Association="ReposModel.FK_Project_Host" ManuallyRouted="false" />
+        <AssociationConnector Association="ReposModel.FK_Job_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="ReposModel.FK_JobRun_Job" ManuallyRouted="false" />
+        <AssociationConnector Association="ReposModel.FK_JobRunDataLocation_JobRun" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

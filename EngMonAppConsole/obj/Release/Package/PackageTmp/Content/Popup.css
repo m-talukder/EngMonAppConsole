@@ -1,0 +1,107 @@
+﻿.popupSqr {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    background-color: rgb(53,175,35);
+    /*opacity:1.0;*/
+    background-image: -ms-radial-gradient(center, circle farthest-corner, #708090 0%, #5AA2CC 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-radial-gradient(center, circle farthest-corner, #708090 0%, #5AA2CC 100%);
+
+/* Opera */ 
+background-image: -o-radial-gradient(center, circle farthest-corner, #708090 0%, #5AA2CC 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(radial, center center, 0, center center, 506, color-stop(0, #BA99AD), color-stop(1, #5AA2CC));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-radial-gradient(center, circle farthest-corner, #708090 0%, #5AA2CC 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: radial-gradient(circle farthest-corner at center, #708090 0%, #5AA2CC 100%);
+ border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-family: sans-serif;
+    font-size: 0.85em;
+   
+    float: left;
+    width: 400PX;
+    /*margin: 10px;*/
+    padding: 10px;
+    text-align: center;
+    /*background: #c8c8bd;*/
+    border: 6px solid rgba(240, 255, 255, 0.7);
+    font-size: 12px;
+    font-kerning: auto;
+    cursor: pointer;
+}
+.popupSqr .gridview td  {
+    
+    border: 1px solid cornsilk;
+        background: transparent;
+    color: cornsilk;
+        font: small "calibri";
+        padding: 3px;
+}
+
+.popupSqr .gridview th {
+     border: 1px solid cornsilk;
+}
+
+    .popupSqr h2 {
+        color: #fff;
+    }
+
+
+
+    .closeDiv {
+    margin: 0px;
+    height: 20px;
+    text-align: right;
+}
+.closeDiv input[type='button']
+{
+        border: solid 1px red;
+    color: red;
+        cursor: pointer;
+    font-size: 0.85em;
+    
+    font-weight: bold;
+    padding: 0px;
+    margin-right: 2px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    width: 20px;
+    height: 23px;
+    
+    }
+
+.closeDiv input[type='button']:hover {
+    background: #fff;
+}
+
+    .popupSqr a {
+        color: #c8c8c8;
+        font-weight: 500;
+    }
+    
+    .btnClose {
+    background-color: red;
+    color: #fff;
+    opacity: 1.0;
+    border: 1px groove red;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 800;
+    padding: 3px;
+    margin: 0px;
+    width: 25px;
+    height: 25px;
+}

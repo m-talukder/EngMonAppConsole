@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EngMonAppConsole.Class.DBConnection">
+    <Position X="0.5" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAIABAAAAA=</HashCode>
+      <FileName>Class\DBConnection.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Host" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EngMonAppConsole.Class.Host">
+    <Position X="3.25" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Host.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="loginForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EngMonAppConsole._Default">
+    <Position X="6" Y="1.25" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>VAJAAAABHBkBMoCAACggIAAAgEAMDAYIkF2BYaYFEIA=</HashCode>
+      <FileName>Default.aspx.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Host" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EngMonAppConsole.loginForm">
+    <Position X="0.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAQEAEAAAAAAAAAEAAAAAAAQAABIAAAAAJAAAA=</HashCode>
+      <FileName>loginForm.aspx.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DBConnection" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EngMonAppConsole.SiteMaster">
+    <Position X="3.25" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAABARKBAIAAAAAECAIBDCAAAAIAAAA=</HashCode>
+      <FileName>Site.Master.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Host" />
+      <Property Name="_Default" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
